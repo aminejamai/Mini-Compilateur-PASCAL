@@ -1,3 +1,7 @@
+/*
+    *** Auteur : JAMAI Mohammed Amine
+    *** Date : 18-11-2020
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include"header.h"
@@ -20,12 +24,10 @@ int main(){
     
     char ch;
     while ((ch = getc(monFichier)) != EOF) {
-        //fputc(ch, stdout);
         if (isalpha(ch) != 0)
         {
             int nv = lireMot(monFichier, ch);
             printf("%s \n", affichage(nv));
-            // affichage
         }else
         {
             if (isdigit(ch) != 0)
