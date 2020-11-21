@@ -52,6 +52,6 @@ int main(){
 
     printf("*********** ANALYSE Syntaxique : \n");
     PROGRAM(tokens);
-    printf("*********** FIN ANALYSE Syntaxique\n");
+    printf("*********** FIN ANALYSE Syntaxique : \n");
     return 0;
 }
