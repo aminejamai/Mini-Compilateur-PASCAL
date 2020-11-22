@@ -1,3 +1,8 @@
+/*
+    Auteur : JAMAI Mohammed Amine
+    GIT : aminejamai
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include"header.h"
@@ -47,7 +52,7 @@ int main(){
     fclose(monFichier);
 
     printf("*********** ANALYSE LEXICALE : \n");
-    //afficherListe(tokens);
+    afficherListe(tokens);
     printf("*********** FIN ANALYSE LEXICALE\n");
 
     printf("*********** ANALYSE Syntaxique : \n");

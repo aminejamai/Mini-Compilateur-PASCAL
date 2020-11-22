@@ -256,19 +256,27 @@ void PROGRAM(Token* token){
                                             if(p->code == PT_TOKEN)
                                                     p = p->next;
                                             else
-                                                printf("%s \n",genererErreur(PT_ERREUR));
+                                                {printf("%s \n",genererErreur(PT_ERREUR));
+                                                exit(1);
+                                                }
                                     }
                                     else 
-                                        printf("%s \n",genererErreur(PV_ERREUR));
+                                        {printf("%s \n",genererErreur(PV_ERREUR)); exit(1);}
                               }
                               else 
-                                  printf("%s \n",genererErreur(ID_ERREUR));
+                                  {printf("%s \n",genererErreur(ID_ERREUR)); exit(1);}
                               break;
           default : 
-                    printf("%s \n", genererErreur(PROGRAM_ERREUR));                              
+                    printf("%s \n", genererErreur(PROGRAM_ERREUR)); 
+                    exit(1);                             
     }
     if(p->code != FIN_TOKEN)
         printf("%s \n", genererErreur(FIN_ERREUR));
+    else
+    {
+        printf(">>>>>> Code est syntaxiquement correcte !\n");
+    }
+    
 }
 
 // code BLOCK()
@@ -302,25 +310,26 @@ Token* CONSTS(Token* token){
                                                         if (p->code == PV_TOKEN)
                                                             p = p->next;
                                                         else 
-                                                            printf("%s \n", genererErreur(PV_ERREUR));
+                                                            {printf("%s \n", genererErreur(PV_ERREUR)); exit(1);}
                                                     }
-                                                    else printf("%s \n", genererErreur(NUM_ERREUR));
+                                                    else {printf("%s \n", genererErreur(NUM_ERREUR)); exit(1);}
                                                 }
-                                                else printf("%s \n", genererErreur(EG_ERREUR));
+                                                else {printf("%s \n", genererErreur(EG_ERREUR)); exit(1);}
                                             }
                                         }
-                                        else printf("%s \n", genererErreur(PV_ERREUR));
+                                        else {printf("%s \n", genererErreur(PV_ERREUR)); exit(1);}
                                     }
-                                    else printf("%s \n", genererErreur(NUM_ERREUR));
+                                    else {printf("%s \n", genererErreur(NUM_ERREUR)); exit(1);}
                                 }
-                                else printf("%s \n", genererErreur(EG_ERREUR));
+                                else {printf("%s \n", genererErreur(EG_ERREUR)); exit(1);}
                             }
-                            else printf("%s \n", genererErreur(ID_ERREUR));
+                            else {printf("%s \n", genererErreur(ID_ERREUR)); exit(1);}
                             break;
             case VAR_TOKEN : break;
             case BEGIN_TOKEN : break;
             default :
                     printf("%s \n", genererErreur(CONST_ERREUR));
+                    exit(1);
       }  
       return p;
 }
@@ -340,6 +349,7 @@ Token* VAR(Token* token){
                                 else {
                                     printf("%s \n", genererErreur(ID_ERREUR));
                                     p = p->next;
+                                    exit(1);
                                 }
                             }
                             if (p->code == PV_TOKEN){
@@ -348,15 +358,18 @@ Token* VAR(Token* token){
                             else {
                                 printf("%s \n", genererErreur(PV_ERREUR));
                                 p = p->next;
+                                exit(1);
                             }
                         }
                         else {
                                 printf("%s \n", genererErreur(ID_ERREUR));
                             p = p->next;
+                            exit(1);
                         }
                         break;
         case BEGIN_TOKEN : break;
         default : printf("%s \n", genererErreur(INCONNU_ERREUR));
+                exit(1);
     }
     return p;
 }
@@ -375,6 +388,7 @@ Token* INSTS(Token* token){
         break;
     
     default: printf("%s \n", genererErreur(BEGIN_ERREUR));
+            exit(1);
         break;
     }
     return p;
@@ -412,6 +426,7 @@ Token* INST(Token* token){
     case END_TOKEN : break;
     default:
         printf("INSTRUCTION_ERREUR \n");
+        exit(1);
         break;
     }
     return p;
@@ -428,6 +443,7 @@ Token* AFFECT(Token* token){
     
     default:
         printf("%s \n", genererErreur(AFF_ERREUR));
+        exit(1);
         break;
     }
     return p;
@@ -470,11 +486,13 @@ Token* FACT(Token* token){
         p = EXPR(p->next);
         if (p->code == PF_TOKEN)
             p = p->next;
-        else printf("%s \n", genererErreur(PF_ERREUR));
+        else {printf("%s \n", genererErreur(PF_ERREUR));
+        exit(1);}
         break;    
 
     default:
         printf("FACTEUR_ERREUR \n");
+        exit(1);
         break;
     }
 }
@@ -525,7 +543,7 @@ Token* SI(Token* token){
     p = COND(p);
     if (p->code == THEN_TOKEN)
         p = INST(p->next);
-    else printf("%s \n", genererErreur(THEN_ERREUR));
+    else {printf("%s \n", genererErreur(THEN_ERREUR)); exit(1);}
 
     return p;
 }
@@ -536,7 +554,7 @@ Token* TANTQUE(Token* token){
     p = COND(p);
     if (p->code == DO_TOKEN)
         p = INST(p->next);
-    else printf("%s \n", genererErreur(DO_ERREUR));
+    else {printf("%s \n", genererErreur(DO_ERREUR)); exit(1);}
 
     return p;
 }
@@ -552,9 +570,9 @@ Token* ECRIRE(Token* token){
         }
         if(p->code == PF_TOKEN)
             p = p->next;
-        else  printf("%s \n", genererErreur(PF_ERREUR));
+        else  {printf("%s \n", genererErreur(PF_ERREUR)); exit(1);}
     }
-    else printf("%s \n", genererErreur(PO_ERREUR));
+    else {printf("%s \n", genererErreur(PO_ERREUR)); exit(1);}
     
     return p;
 }
@@ -570,15 +588,15 @@ Token* LIRE(Token* token){
                 p = p->next;
                 if (p->code == ID_TOKEN)
                     p = p->next;
-                else printf("%s \n", genererErreur(ID_ERREUR));
+                else {printf("%s \n", genererErreur(ID_ERREUR)); exit(1);}
             }
             if(p->code == PF_TOKEN)
                 p = p->next;
-            else  printf("%s \n", genererErreur(PF_ERREUR));
+            else  {printf("%s \n", genererErreur(PF_ERREUR)); exit(1);}
         }
-        else printf("%s \n", genererErreur(ID_ERREUR));
+        else {printf("%s \n", genererErreur(ID_ERREUR)); exit(1);}
     }
-    else printf("%s \n", genererErreur(PO_ERREUR));
+    else {printf("%s \n", genererErreur(PO_ERREUR)); exit(1);}
     
     return p;
 }
